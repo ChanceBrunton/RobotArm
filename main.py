@@ -4,11 +4,16 @@ import cv2
 import ImageProcessing as ip
 #import PyFunc as pi
 
-testImage = 'test3.png'
 
 ### TAKE A PICTURE
 #pi.takePicture('test.jpg');
+
+testImage = 'test3.png'
 img = cv2.imread('input/'+testImage)
+
+if img is None:
+	raise Exception("Error while loading the image")
+
 array = np.asarray(img);
 
 ### CONVERT TO CHROMATIC
@@ -31,5 +36,15 @@ morph = cv2.morphologyEx(thr,cv2.MORPH_OPEN,kernal)
 cv2.imwrite('output/morph.jpg', morph)
 
 ### FIND CONTOURS
-#contour = cv2.findContours(img,0)
-#cv2.imwrite('output/contour.jpg',contour)
+canny = cv2.Canny(morph,40,180)
+cv2.imwrite('output/canny.jpg',canny)
+kernal = np.ones((3,3),np.uint8)
+canny = cv2.morphologyEx(canny,cv2.MORPH_CLOSE,kernal)
+cv2.imwrite('output/canny_filled.jpg', canny)
+contours, hierarchy = cv2.findContours(canny,cv2.cv.CV_RETR_EXTERNAL,method=cv2.cv.CV_CHAIN_APPROX_NONE)
+
+# fill contours
+color = (0,0,0) # black
+for contour in contours:
+	cv2.drawContours(morph,[contour],0,color,cv2.cv.CV_FILLED)
+cv2.imwrite('output/contours.jpg',morph)
