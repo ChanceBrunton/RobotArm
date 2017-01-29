@@ -1,17 +1,11 @@
 import numpy as np
-#from picamera import PiCamera
 import time
 import cv2
 
+#import PyFunc as pi
 
 
-#with PiCamera() as camera:
-#    camera.resolution = (256,256)
-#    camera.start_preview()
-#    time.sleep(2)
-#    camera.capture('test.jpg')
-
-
+#pi.takePicture('test.jpg');
 img = cv2.imread('input/test.jpg')
 array = np.asarray(img);
 
