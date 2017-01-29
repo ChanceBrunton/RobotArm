@@ -12,7 +12,7 @@ import cv2
 #    camera.capture('test.jpg')
 
 
-img = cv2.imread('test.jpg')
+img = cv2.imread('input/test.jpg')
 array = np.asarray(img);
 
 #print(array[1][1])
@@ -38,7 +38,7 @@ for i in range(0,nRows):
 #print(array[1][1])
 
 cv2.imwrite('output/array.jpg', array)
-img2 = cv2.imread('array.jpg')
+img2 = cv2.imread('input/array.jpg')
 img2 = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
 
 
