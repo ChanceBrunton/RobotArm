@@ -4,7 +4,7 @@ import cv2
 import ImageProcessing as ip
 #import PyFunc as pi
 
-testImage = 'test.jpg'
+testImage = 'test3.png'
 
 ### TAKE A PICTURE
 #pi.takePicture('test.jpg');
@@ -32,4 +32,4 @@ cv2.imwrite('output/thresh.jpg', thr)
 
 
 
-
+#cv2.blur(img,(10,10))
