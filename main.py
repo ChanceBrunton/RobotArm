@@ -36,15 +36,8 @@ morph = cv2.morphologyEx(thr,cv2.MORPH_OPEN,kernal)
 cv2.imwrite('output/morph.jpg', morph)
 
 ### FIND CONTOURS
-canny = cv2.Canny(morph,40,180)
-cv2.imwrite('output/canny.jpg',canny)
-kernal = np.ones((3,3),np.uint8)
-canny = cv2.morphologyEx(canny,cv2.MORPH_CLOSE,kernal)
-cv2.imwrite('output/canny_filled.jpg', canny)
-contours, hierarchy = cv2.findContours(canny,cv2.cv.CV_RETR_EXTERNAL,method=cv2.cv.CV_CHAIN_APPROX_NONE)
+contours = ip.findContours(morph)
 
 # fill contours
-color = (0,0,0) # black
-for contour in contours:
-	cv2.drawContours(morph,[contour],0,color,cv2.cv.CV_FILLED)
+morph = ip.fillContours(morph,contours)
 cv2.imwrite('output/contours.jpg',morph)
