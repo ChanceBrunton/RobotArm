@@ -25,11 +25,11 @@ cv2.imwrite('output/gray.jpg', img)
 thr = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2)
 cv2.imwrite('output/thresh.jpg', thr)
 
+### MORPHOLOGICAL TRANSFORMATION
+kernal = np.ones((4,4),np.uint8)
+morph = cv2.morphologyEx(thr,cv2.MORPH_OPEN,kernal)
+cv2.imwrite('output/morph.jpg', morph)
+
 ### FIND CONTOURS
 #contour = cv2.findContours(img,0)
-
-
-
-
-
-#cv2.blur(img,(10,10))
+#cv2.imwrite('output/contour.jpg',contour)
