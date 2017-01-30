@@ -31,7 +31,8 @@ thr = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH
 cv2.imwrite('ip/output/thresh.jpg', thr)
 
 ### MORPHOLOGICAL TRANSFORMATION
-kernal = np.ones((4,4),np.uint8)
+kSize = 4; # size of kernal, horizontal and vertical
+kernal = np.ones((kSize,kSize),np.uint8)
 morph = cv2.morphologyEx(thr,cv2.MORPH_OPEN,kernal)
 cv2.imwrite('ip/output/morph.jpg', morph)
 
