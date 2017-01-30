@@ -23,12 +23,15 @@ def findContours(img):
 	canny = cv2.morphologyEx(canny,cv2.MORPH_CLOSE,kernal)
 	
 	# find contours
-	contours, hierarchy = cv2.findContours(canny,cv2.cv.CV_RETR_EXTERNAL,method=cv2.cv.CV_CHAIN_APPROX_NONE)
+	CV_RETR_EXTERNAL = 0     # workaround for missing constants issue
+	CV_CHAIN_APPROX_NONE = 1 # workaround for missing constants issue
+	contours, hierarchy = cv2.findContours(canny,CV_RETR_EXTERNAL,method=CV_CHAIN_APPROX_NONE)
 
 	return contours
 
 def fillContours(img,contours):
+	CV_FILLED = -1 # workaround for missing constants issue
 	color = (0,0,0) # black
 	for contour in contours:
-		cv2.drawContours(img,[contour],0,color,cv2.cv.CV_FILLED)
+		cv2.drawContours(img,[contour],0,color,CV_FILLED)
 	return img
