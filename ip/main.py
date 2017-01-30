@@ -2,14 +2,14 @@ import numpy as np
 import time
 import cv2
 import ImageProcessing as ip
-#import PyFunc as pi
+import PyFunc as pi
 
 
 ### TAKE A PICTURE
-#pi.takePicture('test.jpg');
+img = pi.takePicture('test.jpg');
 
-testImage = 'test3.png'
-img = cv2.imread('ip/input/'+testImage)
+#testImage = 'test3.png'
+#img = cv2.imread('ip/input/'+testImage)
 
 if img is None:
 	raise Exception("Error while loading the image")
@@ -20,7 +20,12 @@ array = np.asarray(img);
 ip.rgbToChromatic(array)
 cv2.imwrite('ip/output/chromatic.jpg', array)
 
+#print array
+
 ### CONVERT TO GRAY
+img = ip.removeGray(array, 75, 100)
+cv2.imwrite('ip/output/grayRemoved.jpg', img)
+
 img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
 cv2.imwrite('ip/output/gray.jpg', img)
 
