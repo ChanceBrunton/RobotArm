@@ -9,9 +9,9 @@ ser.write("ver\r")
 inp = ser.readline()
 print inp
 
-ser.write("#1P1780S1000\r\n")
+#ser.write("#2P2000S1000\r\n")
 
-#ArmControl.rotate(3,0,ser)
+ArmControl.rotate(2,0,ser)
 #print(ArmControl.map_range(90,0,10,0,100))
 
 ser.close();
