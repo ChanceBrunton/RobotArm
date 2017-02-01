@@ -1,4 +1,6 @@
+import time
 from picamera import PiCamera
+import cv2
 
 def takePicture(name):
 	with PiCamera() as camera:
@@ -6,3 +8,4 @@ def takePicture(name):
 		camera.start_preview()
 		time.sleep(2)
 		camera.capture(name)
+        return cv2.imread(name)
