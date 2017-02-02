@@ -14,3 +14,8 @@ def map_range(og_value,og_min,og_max,new_min,new_max):
         new_range = new_max - new_min
         new_value = (((og_value-og_min)*new_range)/og_range)+new_min
         return new_value
+
+def moveToXYZ(x,y,x):
+	angles = rectToArm(x,y,z)
+	for i in range(0,3):
+		rotate(i,angles[i],ser)
