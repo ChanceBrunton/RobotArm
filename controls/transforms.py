@@ -1,5 +1,5 @@
 import math
-a = 1;b = 2;
+a = 23.812;b = 35.560; # upper and fore-arm lengths in centimeters
 
 def rectToArm(x,y,z):
 	d = math.sqrt(y**2 + z**2)

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import serial
 import time
-import ArmControl
+import ArmControl as ac
 
 ser = serial.Serial('/dev/ttyUSB0',baudrate=9600,timeout=2)
 print(ser.name)
@@ -11,7 +11,7 @@ print inp
 
 #ser.write("#2P2000S1000\r\n")
 
-ArmControl.rotate(2,0,ser)
-#print(ArmControl.map_range(90,0,10,0,100))
+ac.rotate(3,93.111,ser)
+ac.moveToXYZ(20,0,20,ser)
 
 ser.close();
