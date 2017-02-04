@@ -2,6 +2,7 @@ import transforms as tf
 import time
 
 def rotate(servo, angle, ser):
+        #angle = -angle
         pulse = angleToPulse(angle)
         ser.write("#"+str(servo)+"P"+str(pulse)+"S1000\r\n")
         return
@@ -19,12 +20,13 @@ def map_range(og_value,og_min,og_max,new_min,new_max):
         return new_value
 
 def moveToXYZ(x,y,z,ser):
-        theta,phi,eta,psi = tf.rectToArm(x,y,z)
-        print [theta,phi,eta,psi]
+        print("moving to (%d,%d,%d)" % (x,y,z))
+        theta,phi,psi,eta = tf.rectToArm(x,y,z)
+        print [theta,phi,psi,eta]
         rotate(0,theta,ser)
         time.sleep(1)
         rotate(1,phi,ser)
         time.sleep(1)
-        rotate(2,-eta,ser)
+        rotate(2,psi,ser)
         time.sleep(1)
-        rotate(3,psi,ser)
+        rotate(3,eta,ser)

@@ -12,20 +12,22 @@ def rectToArm(x,y,z):
 
 	theta = calculateTheta(x,y)
 	phi   = math.pi/2 - a1 - a2
+	psi = -a4
 	eta = math.pi - (a2+phi) - a3
-	psi = math.pi - a4
 
 	return  math.degrees(theta),math.degrees(phi),math.degrees(psi),math.degrees(eta)
 
 def calculateTheta(x,y):
 	if x == 0:
 		if y >= 0: theta = math.pi/2
-		else:      theta = 3*math.pi/2
+		else:      theta = -math.pi/2
 	elif x < 0:
-		theta = math.atan(y/x) + math.pi
+                if y < 0:
+                        theta = math.atan(y/x) + math.pi
+                else:
+                        theta = math.atan(y/x) - math.pi
 	else:
-		if y >= 0: theta = math.atan(y/x)
-		else:      theta = math.atan(y/x) + 2*math.pi
+                theta = math.atan(y/x)
 	return theta
 
 # pythagoreanTheoremAngle
