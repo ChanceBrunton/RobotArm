@@ -2,6 +2,7 @@
 import serial
 import time
 import ArmControl as ac
+import transforms as tf
 
 ser = serial.Serial('/dev/ttyUSB0',baudrate=9600,timeout=2)
 print(ser.name)
@@ -9,12 +10,9 @@ ser.write("ver\r")
 inp = ser.readline()
 print inp
 
-#ser.write("#2P2000S1000\r\n")
-
-#ac.rotate(0,-90,ser)
-#ac.rotate(1,0.635,ser)
-#ac.rotate(2,0,ser)
-#ac.rotate(3,0,ser)
-ac.moveToXYZ(20,20,20,ser)
+#ac.rotateSingle(5,0,ser)
+ac.moveToXYZ(0,-50,40,ser)
+#ser.write("#5P1300S1000\r\n")
+#ac.closeGrip(ser)
 
 ser.close();

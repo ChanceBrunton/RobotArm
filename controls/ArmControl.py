@@ -1,16 +1,24 @@
 import transforms as tf
 import time
 
-def rotate(servo, angle, ser):
+def rotateSingle(servo, angle, ser):
         #angle = -angle
         pulse = angleToPulse(angle)
         ser.write("#"+str(servo)+"P"+str(pulse)+"S1000\r\n")
         return
 
+def rotate(a0, a1, a2, a3, ser):
+        SPEED = 1000
+        output = ''
+        output += "#0P"+str(angleToPulse(a0))+"S"+str(SPEED)
+        output += "#1P"+str(angleToPulse(a1))+"S"+str(SPEED)
+        output += "#2P"+str(angleToPulse(a2))+"S"+str(SPEED)
+        output += "#3P"+str(angleToPulse(a3))+"S"+str(SPEED)
+        output += "\r\n"
+        ser.write(output)
+
 def angleToPulse(angle):
-        print('movement angle: '),;print('%7.2f'%angle),;print('\t'),
         pulse = map_range(angle,-180,180,950,2040)
-        print('movement pusle: '),;print('%7.2f'%pulse)
         return pulse
 
 def map_range(og_value,og_min,og_max,new_min,new_max):
@@ -20,13 +28,17 @@ def map_range(og_value,og_min,og_max,new_min,new_max):
         return new_value
 
 def moveToXYZ(x,y,z,ser):
-        print("moving to (%d,%d,%d)" % (x,y,z))
         theta,phi,psi,eta = tf.rectToArm(x,y,z)
-        print [theta,phi,psi,eta]
-        rotate(0,theta,ser)
-        time.sleep(1)
-        rotate(1,phi,ser)
-        time.sleep(1)
-        rotate(2,psi,ser)
-        time.sleep(1)
-        rotate(3,eta,ser)
+        rotate(theta,phi,psi,eta,ser)
+
+def openGrip(ser):
+        SPEED = 1000
+        PULSE = 1950
+        output = "#5P"+str(PULSE)+"S"+str(SPEED)+"\r\n"
+        ser.write(output)
+        
+def closeGrip(ser):
+        SPEED = 1000
+        PULSE = 1300
+        output = "#5P"+str(PULSE)+"S"+str(SPEED)+"\r\n"
+        ser.write(output)

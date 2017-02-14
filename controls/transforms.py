@@ -1,18 +1,19 @@
 import math
 a = 23.812;b = 35.560; # upper and fore-arm lengths in centimeters
+base_length = 30;grip_length = 21.27;
 
 def rectToArm(x,y,z):
-	d = math.sqrt(y**2 + z**2)
+        z = z + grip_length - base_length
+	d = math.sqrt(x**2 + y**2 + z**2)
 
-	if y != 0: a1 = math.atan(z/y)
-	else: 	   a1 = math.pi/2
+	a1 = math.atan(z/math.sqrt(x**2 + y**2))
 	a2 = pythagoreanTheoremAngle(b,a,d)
 	a4 = pythagoreanTheoremAngle(d,a,b)
 	a3 = math.pi - a4 - a2
 
 	theta = calculateTheta(x,y)
-	phi   = math.pi/2 - a1 - a2
-	psi = -a4
+        phi = math.pi/2 - a1 - a2
+	psi = a4 - math.pi
 	eta = math.pi - (a2+phi) - a3
 
 	return  math.degrees(theta),math.degrees(phi),math.degrees(psi),math.degrees(eta)
