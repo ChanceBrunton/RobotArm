@@ -11,7 +11,7 @@ inp = ser.readline()
 print inp
 
 #ac.rotateSingle(5,0,ser)
-ac.moveToXYZ(0,-50,40,ser)
+ac.moveToXYZ(20,0,0,ser)
 #ser.write("#5P1300S1000\r\n")
 #ac.closeGrip(ser)
 
