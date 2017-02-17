@@ -1,5 +1,5 @@
 import math
-a = 23.812;b = 35.560; # upper and fore-arm lengths in centimeters
+a = 23.97;b = 35.4; # upper and fore-arm lengths in centimeters
 base_length = 0;#30;
 grip_length = 0;#21.27;
 
@@ -21,7 +21,10 @@ def rectToArm(x,y,z):
 	theta = calculateTheta(x,y)
         phi = math.pi/2 - a1 - a2
 	psi = a4 - math.pi
-	eta = math.pi - (a2+phi) - a3
+	#eta = math.pi - (a2+phi) - a3
+	eta = a4 - phi
+
+	# NOTE: Use Decimal library for more precision in law of cosines?
 
         print("theta:\t"),;print("%7.2f"%math.degrees(theta)),
         print("\tphi:\t"),;print("%7.2f"%math.degrees(phi)),
