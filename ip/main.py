@@ -6,15 +6,16 @@ import PyFunc as pi
 
 
 ### TAKE A PICTURE
-img = pi.takePicture('test.jpg');
+#img = pi.takePicture('test.jpg');
 
-#testImage = 'test3.png'
-#img = cv2.imread('ip/input/'+testImage)
+
+testImage = 'test3.png'
+img = cv2.imread('ip/input/'+testImage)
 
 if img is None:
 	raise Exception("Error while loading the image")
 
-array = np.asarray(img);
+array = np.array(img);
 
 ### CONVERT TO CHROMATIC
 ip.rgbToChromatic(array)
@@ -47,3 +48,14 @@ contours = ip.findContours(morph)
 # fill contours
 morph = ip.fillContours(morph,contours)
 cv2.imwrite('ip/output/contours.jpg',morph)
+
+# bounding box
+
+
+areas = [cv2.contourArea(c) for c in contours]
+max_index = np.argmax(areas)
+cnt = contours[max_index]
+box = cv2.boundingRect(cnt)
+box2 = cv2.fitLine(box,0,0,0.01,0.01)
+print(box2)
+
