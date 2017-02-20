@@ -10,8 +10,8 @@ ser.write("ver\r")
 inp = ser.readline()
 print inp
 
-#ac.rotateSingle(5,0,ser)
-ac.moveToXYZ(20,0,0,ser)
+#ac.rotateSingle(4,0,ser)
+ac.moveToXYZ(30,0,0,ser)
 #ser.write("#5P1300S1000\r\n")
 #ac.closeGrip(ser)
 
