@@ -1,6 +1,10 @@
 import transforms as tf
 import time
 
+#DEG_PER_MS = 1.57
+DEG_PER_MS = 0.3475
+MS_PER_DEG = 1/DEG_PER_MS
+
 def rotateSingle(servo, angle, ser):
         #angle = -angle
         pulse = angleToPulse(angle)
@@ -19,6 +23,7 @@ def rotate(a0, a1, a2, a3, ser):
 
 def angleToPulse(angle):
         pulse = map_range(angle,-180,180,950,2040)
+        #pulse = 1500-angle*MS_PER_DEG
         return pulse
 
 def map_range(og_value,og_min,og_max,new_min,new_max):
