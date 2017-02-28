@@ -23,13 +23,13 @@ def rotate(new_angles,ser):
         pulse = [[d[1],d[2]] for d in decorated]
         print pulse
         
-        SPEED = 100
+        SPEED = 1000
         output = ''
         for obj in pulse:
                 output += "#"+str(obj[1])+"P"+str(obj[0])#+"S"+str(SPEED)
                 #ser.write("#"+str(obj[1])+"P"+str(int(obj[0]))+"S"+str(SPEED)+"\r\n")
                 #time.sleep(3)
-        output += "T2500\r\n"
+        output += "T1000\r\n"
         ser.write(output)
 
         # if pOld <= Pnew for servo 1 (pulse[1])
@@ -48,18 +48,20 @@ def map_range(og_value,og_min,og_max,new_min,new_max):
         new_value = (((og_value-og_min)*new_range)/og_range)+new_min
         return new_value
 
-def moveToXYZ(new_pos,old_pos,ser):    
-        transient1 = tf.rectToArm([sum(groundHog) for groundHog in zip(old_pos,[0,0,10])])
-        transient2 = tf.rectToArm([sum(groundHog) for groundHog in zip(new_pos,[0,0,10])])
+def moveToXYZ(new_pos,old_pos,ser):
+        sleep = 3
+        height = 20
+        transient1 = tf.rectToArm([sum(groundHog) for groundHog in zip(old_pos,[0,0,height])])
+        transient2 = tf.rectToArm([sum(groundHog) for groundHog in zip(new_pos,[0,0,height])])
         new_angles = tf.rectToArm(new_pos)
 
-        rotate(transient1,ser);time.sleep(7)
-        rotate(transient2,ser);time.sleep(7)
-        rotate(new_angles,ser);time.sleep(7)
+        rotate(transient1,ser);time.sleep(sleep)
+        rotate(transient2,ser);time.sleep(sleep)
+        rotate(new_angles,ser);time.sleep(sleep)
         return new_pos
 
 def openGrip(ser):
-        SPEED = 10
+        SPEED = 1000
         PULSE = 1950
         output = "#5P"+str(PULSE)+"S"+str(SPEED)+"\r\n"
         ser.write(output)
