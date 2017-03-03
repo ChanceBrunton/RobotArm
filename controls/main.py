@@ -3,6 +3,7 @@ import serial
 import time
 import ArmControl as ac
 import transforms as tf
+from Utility import *
 
 # serial communication
 ser = serial.Serial('/dev/ttyUSB0',baudrate=9600,timeout=2)
@@ -14,8 +15,9 @@ ac.rotate(tf.rectToArm(initialPosition),ser);
 
 # move arm until program ends
 while True:
-    new_pos = input("Position ('[x,y,z]'): ")
+    new_pos = read_coords()
     ac.openGrip(ser)
     current_pos = ac.moveToXYZ(new_pos,current_pos,ser)
     ac.closeGrip(ser)
 ser.close();
+

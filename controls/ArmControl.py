@@ -27,15 +27,8 @@ def rotate(new_angles,ser):
         output = ''
         for obj in pulse:
                 output += "#"+str(obj[1])+"P"+str(obj[0])#+"S"+str(SPEED)
-                #ser.write("#"+str(obj[1])+"P"+str(int(obj[0]))+"S"+str(SPEED)+"\r\n")
-                #time.sleep(3)
         output += "T1000\r\n"
         ser.write(output)
-
-        # if pOld <= Pnew for servo 1 (pulse[1])
-          # if pOld <= Pnew for servo 2 (pulse[2])
-             # move servo 3
-          # move servo 2   
 
 def angleToPulse(angle):
         pulse = map_range(angle,-180,180,950,2040)
@@ -49,16 +42,21 @@ def map_range(og_value,og_min,og_max,new_min,new_max):
         return new_value
 
 def moveToXYZ(new_pos,old_pos,ser):
-        sleep = 3
-        height = 20
-        transient1 = tf.rectToArm([sum(groundHog) for groundHog in zip(old_pos,[0,0,height])])
-        transient2 = tf.rectToArm([sum(groundHog) for groundHog in zip(new_pos,[0,0,height])])
-        new_angles = tf.rectToArm(new_pos)
+        try:
+                sleep = 3;  height = 20
 
-        rotate(transient1,ser);time.sleep(sleep)
-        rotate(transient2,ser);time.sleep(sleep)
-        rotate(new_angles,ser);time.sleep(sleep)
-        return new_pos
+                transient1 = tf.rectToArm([sum(groundHog) for groundHog in zip(old_pos,[0,0,height])])
+                transient2 = tf.rectToArm([sum(groundHog) for groundHog in zip(new_pos,[0,0,height])])
+                new_angles = tf.rectToArm(new_pos)
+
+                rotate(transient1,ser);time.sleep(sleep)
+                rotate(transient2,ser);time.sleep(sleep)
+                rotate(new_angles,ser);time.sleep(sleep)
+                return new_pos
+        except ValueError:
+                print("Unable to move arm to "),;print(new_pos),
+                print(" from "),;print(old_pos)
+                print("Check to ensure arm can physically reach destination position.")
 
 def openGrip(ser):
         SPEED = 1000
