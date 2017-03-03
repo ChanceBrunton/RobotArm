@@ -16,19 +16,16 @@ def rotate(new_angles,ser):
         pulse = []
         for angle in new_angles:
                 pulse.append(angleToPulse(angle))
-        print pulse 
         
         decorated = [(abs(pulse[i]-1500),pulse[i], i) for i in range(0,len(pulse))]
         decorated.sort()
         pulse = [[d[1],d[2]] for d in decorated]
-        print pulse
         
-        SPEED = 1000
         output = ''
         for obj in pulse:
-                output += "#"+str(obj[1])+"P"+str(obj[0])#+"S"+str(SPEED)
+                output += "#"+str(obj[1])+"P"+str(obj[0])
         output += "T1000\r\n"
-        ser.write(output)
+        ser.write(output) 
 
 def angleToPulse(angle):
         pulse = map_range(angle,-180,180,950,2040)
@@ -43,7 +40,7 @@ def map_range(og_value,og_min,og_max,new_min,new_max):
 
 def moveToXYZ(new_pos,old_pos,ser):
         try:
-                sleep = 3;  height = 20
+                sleep = 1;  height = 20
 
                 transient1 = tf.rectToArm([sum(groundHog) for groundHog in zip(old_pos,[0,0,height])])
                 transient2 = tf.rectToArm([sum(groundHog) for groundHog in zip(new_pos,[0,0,height])])
@@ -52,6 +49,7 @@ def moveToXYZ(new_pos,old_pos,ser):
                 rotate(transient1,ser);time.sleep(sleep)
                 rotate(transient2,ser);time.sleep(sleep)
                 rotate(new_angles,ser);time.sleep(sleep)
+                
                 return new_pos
         except ValueError:
                 print("Unable to move arm to "),;print(new_pos),
