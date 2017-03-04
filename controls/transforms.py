@@ -22,7 +22,7 @@ def convertCamY(camY,height):
 
 
 a = 17.78;b = 30.48; # upper and fore-arm lengths in centimeters
-HT_LEN_CORR_FACTOR = 0.18# height correction slope
+HT_LEN_CORR_FACTOR = 0.18 # height correction slope
 HT_LEN_CORR_OFFSET = -4.0 # height correction offset
 base_length = 30.48;
 grip_length = 20.955;

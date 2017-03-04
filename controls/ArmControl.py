@@ -7,7 +7,6 @@ DEG_PER_MS = 0.3475
 MS_PER_DEG = 1/DEG_PER_MS
 
 def rotateSingle(servo, angle, ser):
-        #angle = -angle
         pulse = angleToPulse(angle)
         ser.write("#"+str(servo)+"P"+str(pulse)+"S1000\r\n")
         return
@@ -39,8 +38,9 @@ def map_range(og_value,og_min,og_max,new_min,new_max):
         return new_value
 
 def moveToXYZ(new_pos,old_pos,ser):
+        # Moves the arm to the given XYZ coordinates.
         try:
-                sleep = 1;  height = 20
+                sleep = 4;  height = 20
 
                 transient1 = tf.rectToArm([sum(groundHog) for groundHog in zip(old_pos,[0,0,height])])
                 transient2 = tf.rectToArm([sum(groundHog) for groundHog in zip(new_pos,[0,0,height])])
