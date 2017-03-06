@@ -10,6 +10,7 @@ MS_PER_DEG = 1/DEG_PER_MS
 
 def rotateSingle(servo, angle, ser):
         pulse = angleToPulse(angle)
+        print('Sending servo %d to angle %.1f with pulse %.1f'%(servo,angle,pulse))
         ser.write("#"+str(servo)+"P"+str(pulse)+"S1000\r\n")
         return
 

@@ -26,11 +26,18 @@ base_length = 30.48;
 grip_length = 20.955;
 
 def rectToArm(X):
+        print('converting [%d, %d, %d]'%tuple(X)),
+        
         X = list(X)
         d_projected = math.sqrt(X[0]**2 + X[1]**2)
+        d = math.sqrt(X[0]**2 + X[1]**2 + X[2]**2)
+
+        print('d = %f'%d)
+        print('d_projected = %f'%d_projected)
+        
         correction = HT_LEN_CORR_FACTOR*d_projected + HT_LEN_CORR_OFFSET
         X[2] = X[2] + grip_length - base_length + correction
-	d = math.sqrt(X[0]**2 + X[1]**2 + X[2]**2)
+	
 
 	a1 = math.atan(X[2]/math.sqrt(X[0]**2 + X[1]**2))
 
@@ -46,10 +53,21 @@ def rectToArm(X):
 	
 	a3 = math.pi - a4 - a2
 
+        print('%5.2f %5.2f %5.2f %5.2f'%(math.degrees(a1),\
+                                         math.degrees(a2),\
+                                         math.degrees(a3),\
+                                         math.degrees(a4)))
+
 	theta = calculateTheta(X[0],X[1])
         phi = math.pi/2 - a1 - a2
 	psi = a4 - math.pi
 	eta = a4 - phi
+
+	print('recieved [%d, %d, %d, %d]'%(math.degrees(theta),\
+                                           math.degrees(phi),\
+                                           math.degrees(psi),\
+                                           math.degrees(eta)))
+	
 	return  math.degrees(theta),\
                 math.degrees(phi),\
                 -math.degrees(psi),\
