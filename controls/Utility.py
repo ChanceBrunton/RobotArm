@@ -11,6 +11,6 @@ def read_coords():
 
     # convert array elements from strings to ints
     for i in range(0,len(new_pos)):
-        new_pos[i] = int(new_pos[i])
+        new_pos[i] = float(new_pos[i])
         
     return new_pos

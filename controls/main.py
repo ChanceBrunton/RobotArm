@@ -22,7 +22,7 @@ goal_pos = [30,0,10]
 obj_pos = [12.7,0,0] # 5 inches
 
 # test arm
-#loopTest(current_pos,ser)
-repeatPickupTest(current_pos,initial_pos,obj_pos,goal_pos,ser)
+loopTest(current_pos,ser)
+#repeatPickupTest(current_pos,initial_pos,obj_pos,goal_pos,ser)
         
 ser.close();
