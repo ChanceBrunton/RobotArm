@@ -20,25 +20,32 @@ def convertCamY(camY,height):
 # Rectangular/Arm Coordinate Transforms
 #########################################
 a = 17.78;b = 30.48; # upper and fore-arm lengths in centimeters
-HT_LEN_CORR_FACTOR = 0.18 # height correction slope
-HT_LEN_CORR_OFFSET = -2.6 # height correction offset
+#SLOPE = 0.1832   # height correction slope
+SLOPE = 3.8
+#OFFSET = -1.5875 # height correction offset
+OFFSET = -21
 base_length = 30.48;
 grip_length = 20.955;
+MIN_DIST = 13;
 
-def rectToArm(X):
-        print('converting [%d, %d, %d]'%tuple(X)),
-        
-        X = list(X)
+def rectToArm(X): 
+        X = list(X) # copy list so as not to modify original
+
+        # calculate distance from destination
         d_projected = math.sqrt(X[0]**2 + X[1]**2)
         d = math.sqrt(X[0]**2 + X[1]**2 + X[2]**2)
 
-        print('d = %f'%d)
-        print('d_projected = %f'%d_projected)
-        
-        correction = HT_LEN_CORR_FACTOR*d_projected + HT_LEN_CORR_OFFSET
-        X[2] = X[2] + grip_length - base_length + correction
-	
+        #TODO:
+        # The arm is 5/8" above where it should be at 14,0,0 and
+        # 1.25" below where it should be at 40,0,0 without correction factors
 
+        # apply linear corrective term to arm height
+        corrective_line = OFFSET + SLOPE*math.sqrt(d_projected)
+        X[2] = X[2] + corrective_line
+
+        # adjust for base height and grip length
+        X[2] = X[2] + grip_length - base_length
+	
 	a1 = math.atan(X[2]/math.sqrt(X[0]**2 + X[1]**2))
 
 	try:

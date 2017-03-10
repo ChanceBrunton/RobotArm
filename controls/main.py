@@ -10,7 +10,7 @@ from TestRoutines import *
 ser = serial.Serial('/dev/ttyUSB0',baudrate=9600,timeout=2)
 
 # intial position
-initial_pos = [43.18,0,10]; # 17 inches
+initial_pos = [20,0,30]; # 17 inches
 current_pos = list(initial_pos);
 #ac.rotate(tf.rectToArm(list(initial_pos)),ser);
 time.sleep(2)

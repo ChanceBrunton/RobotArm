@@ -23,7 +23,13 @@ def repeatPickupTest(current_pos,initial_pos,obj_pos,goal_pos,ser):
 
 def loopTest(current_pos,ser):
         while True:
-                new_pos = read_coords()
-                ac.openGrip(ser)
-                current_pos = ac.moveToXYZ(new_pos,current_pos,ser)
-                ac.closeGrip(ser)
+                try:
+                        new_pos = read_coords()
+                        ac.openGrip(ser)
+                        current_pos = ac.moveToXYZ(new_pos,current_pos,ser)
+                        ac.closeGrip(ser)
+                except TypeError as err:
+                        print("Current position could not be calculated. "\
+                              +"\tNew or current position may be invalid.\n"+str(err))
+                except ValueError as err:
+                        print(err)

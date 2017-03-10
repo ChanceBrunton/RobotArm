@@ -50,21 +50,24 @@ def moveToXYZ(new_pos,current_pos,ser):
                 print("initial new_pos "),; print new_pos
 
                 # calculate the initial height clearances
-                maxArmHeight = 48
-                armReach = 34
+                maxArmHeight = 48 # maximum height the arm can reach
+                armReach = 34 # total length over which the arm can reach
                 h1 = maxArmHeight - (maxArmHeight/armReach)*math.sqrt(current_pos[0]**2 + current_pos[1]**2)
                 h2 = maxArmHeight - (maxArmHeight/armReach)*math.sqrt(new_pos[0]**2 + new_pos[1]**2)
-                
+
+                print('h1 = %7.4f\th2 = %7.4f'%(h1,h2))
 
                 try:
-                        transient1 = tf.rectToArm([sum(groundHog) for groundHog in zip(current_pos,[0,0,h1])])
+                        dest1 = [current_pos[0],current_pos[1],h1] # use transient height over old position
+                        transient1 = tf.rectToArm(dest1)
                 except ValueError as err:
-                        raise ValueError('Unable to move to move to [%s,%s,%s]\n\t'%tuple(transient1)+str(err))
+                        raise ValueError('Unable to move to move to [%s,%s,%s]\n\t'%tuple(dest1)+str(err))
 
                 try:
-                        transient2 = tf.rectToArm([sum(groundHog) for groundHog in zip(new_pos,[0,0,h2])])
+                        dest2 = [new_pos[0],new_pos[1],h2] # use transient height over new position
+                        transient2 = tf.rectToArm(dest2)
                 except ValueError as err:
-                        raise ValueError('Unable to move to move to [%s,%s,%s]\n\t'%tuple(transient2)+str(err))
+                        raise ValueError('Unable to move to move to [%s,%s,%s]\n\t'%tuple(dest2)+str(err))
 
                 try:
                         new_angles = tf.rectToArm(new_pos)
