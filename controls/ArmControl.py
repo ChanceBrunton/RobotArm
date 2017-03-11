@@ -4,8 +4,7 @@ import time
 import traceback
 import math
 
-#DEG_PER_MS = 1.57
-DEG_PER_MS = 0.3475
+DEG_PER_MS = 1.57/5
 MS_PER_DEG = 1/DEG_PER_MS
 
 def rotateSingle(servo, angle, ser):
@@ -30,8 +29,7 @@ def rotate(new_angles,ser):
         ser.write(output) 
 
 def angleToPulse(angle):
-        pulse = map_range(angle,-180,180,950,2040)
-        #pulse = 1500-angle*MS_PER_DEG
+        pulse = 1500+angle*MS_PER_DEG
         return pulse
 
 def map_range(og_value,og_min,og_max,new_min,new_max):

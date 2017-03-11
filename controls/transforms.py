@@ -40,11 +40,11 @@ def rectToArm(X):
         # 1.25" below where it should be at 40,0,0 without correction factors
 
         # apply linear corrective term to arm height
-        corrective_line = OFFSET + SLOPE*math.sqrt(d_projected)
-        X[2] = X[2] + corrective_line
+        #corrective_line = OFFSET + SLOPE*math.sqrt(d_projected)
+        #X[2] = X[2] + corrective_line
 
         # adjust for base height and grip length
-        X[2] = X[2] + grip_length - base_length
+        #X[2] = X[2] + grip_length - base_length
 	
 	a1 = math.atan(X[2]/math.sqrt(X[0]**2 + X[1]**2))
 

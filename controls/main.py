@@ -22,9 +22,11 @@ goal_pos = [30,0,10]
 obj_pos = [12.7,0,0] # 5 inches
 
 # test arm
-loopTest(current_pos,ser)
+#loopTest(current_pos,ser)
 #repeatPickupTest(current_pos,initial_pos,obj_pos,goal_pos,ser)
 #ac.rotateSingle(3,0,ser)
-#ser.write("#3P1403S1000\r\n")
-        
+ser.write("#0P"+str(ac.angleToPulse(0))+"S10\r\n")
+ser.write("#1P"+str(ac.angleToPulse(90))+"S10\r\n")
+ser.write("#2P"+str(ac.angleToPulse(0))+"S10\r\n")
+ser.write("#3P"+str(ac.angleToPulse(0))+"S10\r\n")
 ser.close();
