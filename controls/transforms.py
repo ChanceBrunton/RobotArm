@@ -35,14 +35,6 @@ def rectToArm(X):
         d_projected = math.sqrt(X[0]**2 + X[1]**2)
         d = math.sqrt(X[0]**2 + X[1]**2 + X[2]**2)
 
-        #TODO:
-        # The arm is 5/8" above where it should be at 14,0,0 and
-        # 1.25" below where it should be at 40,0,0 without correction factors
-
-        # apply linear corrective term to arm height
-        #corrective_line = OFFSET + SLOPE*math.sqrt(d_projected)
-        #X[2] = X[2] + corrective_line
-
         # adjust for base height and grip length
         #X[2] = X[2] + grip_length - base_length
 	
@@ -70,6 +62,11 @@ def rectToArm(X):
 	psi = a4 - math.pi
 	eta = a4 - phi
 
+        #TODO: need to methodically find better k1 and k2 values for function
+	dPhi,dPsi = calculateOffsets(phi,psi)
+	phi = phi + dPhi
+	psi = psi + dPsi
+
 	print('recieved [%d, %d, %d, %d]'%(math.degrees(theta),\
                                            math.degrees(phi),\
                                            math.degrees(psi),\
@@ -79,6 +76,15 @@ def rectToArm(X):
                 math.degrees(phi),\
                 -math.degrees(psi),\
                 -math.degrees(eta)
+
+def calculateOffsets(phi,psi):
+        k1 = 0 # experimental parameter proportional to weight
+        k2 = 0.4 # experimental parameter proportional to weight
+        deltaPhi = k2*math.cos(phi+psi-math.pi/2.0)
+        deltaPsi = k1*math.sin(phi) + deltaPhi
+        print deltaPhi
+        print deltaPsi
+        return deltaPhi,deltaPsi
 
 def calculateTheta(x,y):
 	if x == 0:
