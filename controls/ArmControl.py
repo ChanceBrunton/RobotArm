@@ -7,39 +7,26 @@ import math
 DEG_PER_MS = 1.57/5
 MS_PER_DEG = 1/DEG_PER_MS
 
-def rotateSingle(servo, angle, ser):
-        pulse = angleToPulse(angle)
-        print('Sending servo %d to angle %.1f with pulse %.1f'%(servo,angle,pulse))
-        ser.write("#"+str(servo)+"P"+str(pulse)+"S1000\r\n")
-        return
-
 def rotate(new_angles,ser):
-        pulse = []
+        i = 0; output = '';
         for angle in new_angles:
-                pulse.append(angleToPulse(angle))
-        
-        decorated = [(abs(pulse[i]-1500),pulse[i], i) for i in range(0,len(pulse))]
-        decorated.sort()
-        pulse = [[d[1],d[2]] for d in decorated]
-        
-        output = ''
-        for obj in pulse:
-                output += "#"+str(obj[1])+"P"+str(obj[0])
+                print angle
+                output += "#"+str(i)+"P"+str(angleToPulse(angle))
+                i += 1
         output += "T1000\r\n"
+        print output
         ser.write(output) 
 
 def angleToPulse(angle):
         pulse = 1500+angle*MS_PER_DEG
         return pulse
 
-def map_range(og_value,og_min,og_max,new_min,new_max):
-        og_range = og_max - og_min
-        new_range = new_max - new_min
-        new_value = (((og_value-og_min)*new_range)/og_range)+new_min
-        return new_value
-
-def moveToXYZ(new_pos,current_pos,ser):
+def moveToXYZ(new_position,current_position,ser):
         # Moves the arm to the given XYZ coordinates.
+
+        # separate input
+        new_pos = np.array(new_position)
+        current_pos = np.array(current_position)
         try:
                 sleep = 5;  height = 20
                 neutral_pt = [30,0,40]

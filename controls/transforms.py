@@ -36,17 +36,21 @@ def rectToArm(X):
         d = math.sqrt(X[0]**2 + X[1]**2 + X[2]**2)
 
         # adjust for base height and grip length
-        #X[2] = X[2] + grip_length - base_length
+        X[2] = X[2] + grip_length - base_length
 	
 	a1 = math.atan(X[2]/math.sqrt(X[0]**2 + X[1]**2))
 
 	try:
                 a2 = pythagoreanTheoremAngle(b,a,d)
+                if a2 < 0:
+                        raise ValueError('Interior angle of triangle is negative.')
         except ValueError as err:
                 raise ValueError('failed computing a2 with (%f,%f,%f)\n\t'%(b,a,d)+str(err))
 
         try:
                 a4 = pythagoreanTheoremAngle(d,a,b)
+                if a4 < 0:
+                        raise ValueError('Interior angle of triangle is negative.')
         except ValueError as err:
                 raise ValueError('failed computing a4 with (%f,%f,%f)\n\t'%(d,a,b)+str(err))
 	
@@ -59,31 +63,39 @@ def rectToArm(X):
 
 	theta = calculateTheta(X[0],X[1])
         phi = math.pi/2 - a1 - a2
-	psi = a4 - math.pi
-	eta = a4 - phi
+	psi = -(a4 - math.pi)
+	eta = -(a4 - phi)
 
-        #TODO: need to methodically find better k1 and k2 values for function
+	print('recieved1 [%d, %d, %d, %d]'%(math.degrees(theta),\
+                                           math.degrees(phi),\
+                                           math.degrees(psi),\
+                                           math.degrees(eta)))
+
 	dPhi,dPsi = calculateOffsets(phi,psi)
+	print('dPhi = %f\tdPsi = %f'%(math.degrees(dPhi),math.degrees(dPsi)))
+	print('phi = %f\tpsi = %f'%(math.degrees(phi),math.degrees(psi)))
 	phi = phi + dPhi
 	psi = psi + dPsi
-
-	print('recieved [%d, %d, %d, %d]'%(math.degrees(theta),\
+        print('phi = %f\tpsi = %f'%(math.degrees(phi),math.degrees(psi)))
+	print('recieved2 [%d, %d, %d, %d]'%(math.degrees(theta),\
                                            math.degrees(phi),\
                                            math.degrees(psi),\
                                            math.degrees(eta)))
 	
 	return  math.degrees(theta),\
                 math.degrees(phi),\
-                -math.degrees(psi),\
-                -math.degrees(eta)
+                math.degrees(psi),\
+                math.degrees(eta)
 
 def calculateOffsets(phi,psi):
-        k1 = 0 # experimental parameter proportional to weight
-        k2 = 0.4 # experimental parameter proportional to weight
-        deltaPhi = k2*math.cos(phi+psi-math.pi/2.0)
-        deltaPsi = k1*math.sin(phi) + deltaPhi
-        print deltaPhi
-        print deltaPsi
+        print('phi = %f\tpsi = %f'%(math.degrees(phi),math.degrees(psi)))
+        k2 = -7 # experimental parameter proportional to weight
+        k1 = -6 # experimental parameter proportional to weight
+        deltaPsi = k2*math.cos(abs(phi)+abs(psi)-math.pi/2.0)
+        deltaPhi = k1*math.sin(abs(phi)) + deltaPsi
+        deltaPhi = math.radians(deltaPhi)
+        deltaPsi = math.radians(deltaPsi)
+        print('dPhi = %f\tdPsi = %f'%(math.degrees(deltaPhi),math.degrees(deltaPsi)))
         return deltaPhi,deltaPsi
 
 def calculateTheta(x,y):
