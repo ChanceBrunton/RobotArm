@@ -23,8 +23,9 @@ goal_pos = [45,0,10]
 obj_pos = [30,0,0] # 5 inches
 
 # test arm
-#loopTest(current_pos,ser)
-repeatPickupTest(current_pos,initial_pos,obj_pos,goal_pos,ser)
+######## NOTE: TODO: Use 'logging' instead of print for debug statements
+loopTest(current_pos,ser)
+#repeatPickupTest(current_pos,initial_pos,obj_pos,goal_pos,ser)
 
 #theta = 0
 #phi = -21

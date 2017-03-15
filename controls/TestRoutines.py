@@ -1,5 +1,7 @@
 from Utility import *
 import ArmControl as ac
+import Queue
+import threading
 
 def repeatPickupTest(current_pos,initial_pos,obj_pos,goal_pos,ser):
         counter = 1
@@ -22,9 +24,14 @@ def repeatPickupTest(current_pos,initial_pos,obj_pos,goal_pos,ser):
                 print('ValueError: '),;print(err)
 
 def loopTest(current_pos,ser):
+        cmd_queue = Queue.Queue()
+        t = threading.Thread(name='input',target=readInput,args=(cmd_queue,))
+        t.start()
         while True:
                 try:
-                        new_pos = read_coords()
+                        new_pos = cmd_queue.get()
+                        if (new_pos == 'q'):
+                                break
                         ac.openGrip(ser)
                         current_pos = ac.moveToXYZ(new_pos,current_pos,ser)
                         ac.closeGrip(ser)
