@@ -1,6 +1,7 @@
 def readInput(q): # q is a queue
     while True:
         # read input as string
+        print(">> ");
         new_pos = raw_input("Position ('[x,y,z]'): ")
         print 'recieved %s'%new_pos
         if (new_pos == 'q'):

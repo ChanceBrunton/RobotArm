@@ -1,16 +1,17 @@
 import socket
 
-server_address = ('localhost',5001)
+class Server:
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.connect(server_address)
+    def __init__(self):
+        server_address = ('localhost',5001)
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.connect(server_address)
 
-while True:
-    print(sock.recv(1024))
-    
-    
+    def request():
+        print(sock.recv(1024))
 
-sock.close
+    def close(self):
+        sock.close
 
 
 
