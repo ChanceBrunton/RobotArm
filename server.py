@@ -12,8 +12,19 @@ while True:
     connect, addr = sock.accept()
     print("Connection accepted from " + repr(addr[1]))
 
-    connect.sendall('Hello')
+    req_string = connect.recv(1024)
 
-    print(connect.recv(1024))
+    if req_string == 'Picture':
+
+        connect.sendall('Here is your info')
+
+        req_string = ''
+
+        
+    
+
+    
+    
+    #print(connect.recv(1024))
 
 c.close
