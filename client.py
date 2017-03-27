@@ -1,6 +1,6 @@
 import socket
 
-class Server:
+class Client:
 
     def __init__(self):
         server_address = ('localhost',5001)
