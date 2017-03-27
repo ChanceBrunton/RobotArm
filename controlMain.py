@@ -1,4 +1,4 @@
-#!/usr/bin/python
+ #!/usr/bin/python
 import serial
 import time
 import ArmControl as ac
@@ -13,12 +13,14 @@ ser = serial.Serial('/dev/ttyUSB0',baudrate=9600,timeout=2)
 
 # socket communication
 server_address = ('localhost',5001)
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.connect(server_address)
 
-sock.sendall('Picture')
-objString = sock.recv(1024)
-print objString
+while True:
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.connect(server_address)
+    sock.sendall('Picture')
+    objString = sock.recv(1024)
+    print objString
+    sock.close
 
 # intial position
 #initial_pos = [20,0,30]; # 17 inches
@@ -30,4 +32,4 @@ print objString
 goal_pos = [45,0,10] # 12 inches
 obj_pos = [30,0,0] # 5 inches
 
-sock.close
+
